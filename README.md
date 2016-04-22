@@ -1,4 +1,4 @@
-# RugCoPro - New Hire Test
+# RugCoPro - Candidate Test
 
 #####  Evaluation Criteria:
 
@@ -42,7 +42,6 @@ Fork this repository and add your code and any assets we would require to take a
 #### Bonus
 
 *  Add an option to search rugs by name
-*  Add a creation date to for rugs (calculated automatically)
 *  Add pictures of the rugs and display
   *  Thumbnail in thumb list
   *  larger image in rug details screen
