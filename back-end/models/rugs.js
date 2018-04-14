@@ -42,7 +42,7 @@ const rugSchema = new Schema({
         type: Currency,
         required: true,
         min: 0
-    }
+    },
     comments:[commentSchema]
 },{
     timestamps: true
