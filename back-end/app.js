@@ -4,8 +4,29 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+
+const rugRouter = require('./routes/rugRouter'); // importing rugRouter
+
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
+
+
+const url = 'mongodb://localhost:27017/rugcopro'; // localhost mongo url with the db name "rugcopro"
+
+// connection to mongodb
+const connect = mongoose.connect(url);
+
+
+
+connect.then((db) => {
+    db = mongoose.connection;
+    console.log("Connected correctly to the server.");
+}, (err) => {
+    console.log(err);
+});
 
 var app = express();
 
@@ -19,8 +40,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+app.use('/rugs', rugRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
