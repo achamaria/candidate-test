@@ -2,79 +2,83 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Rugs = require('../models/ruges');
+const cors = require('./cors');
 
 const rugRouter = express.Router();
+
+const Rugs = require('../models/rugs');
 
 rugRouter.use(bodyParser.json());
 
 rugRouter.route('/')
-    .get((req,res,next) => {
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+    .get(cors.cors, (req, res, next) => {
         Rugs.find({})
-            .then((ruges) => {
+            .then((rugs) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(ruges);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(rugs)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     })
-    .post((req, res, next) => {
+    .post(cors.corsWithOptions, (req ,res, next) => {
         Rugs.create(req.body)
             .then((rug) => {
-                console.log('Rug Created ', rug);
+                console.log('Rug created ', rug);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(rug);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(rug)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     })
-    .put((req, res, next) => {
+    .put(cors.corsWithOptions, (req ,res, next) => {
         res.statusCode = 403;
-        res.end('PUT operation not supported on /ruges');
+        res.end('PUT operation not supported on /rugs');
     })
-    .delete((req, res, next) => {
+    .delete(cors.corsWithOptions, (req, res, next) => {
         Rugs.remove({})
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(resp);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(resp)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     });
 
 rugRouter.route('/:rugId')
-    .get((req,res,next) => {
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
+    .get(cors.cors, (req,res,next) => {
         Rugs.findById(req.params.rugId)
             .then((rug) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(rug);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(rug)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     })
-    .post((req, res, next) => {
+    .post(cors.corsWithOptions, (req ,res, next) => {
         res.statusCode = 403;
-        res.end('POST operation not supported on /ruges/'+ req.params.rugId);
+        res.end('POST operation not supported on /rugs/' + req.params.rugId);
     })
-    .put((req, res, next) => {
+    .put(cors.corsWithOptions, (req ,res, next) => {
         Rugs.findByIdAndUpdate(req.params.rugId, {
-            $set: req.body
+            $set : req.body
         }, { new: true })
             .then((rug) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(rug);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(rug)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     })
-    .delete((req, res, next) => {
+    .delete(cors.corsWithOptions, (req, res, next) => {
         Rugs.findByIdAndRemove(req.params.rugId)
             .then((resp) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(resp);
-            }, (err) => next(err))
-            .catch((err) => next(err));
+                res.json(resp)
+            }, (err) => {next(err)})
+            .catch((err) => {next(err)})
     });
 
 module.exports = rugRouter;
