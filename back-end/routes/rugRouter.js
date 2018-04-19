@@ -8,7 +8,9 @@ const rugRouter = express.Router();
 
 const Rugs = require('../models/rugs');
 
-rugRouter.use(bodyParser.json());
+rugRouter.use(bodyParser());
+rugRouter.use(express.json({limit: '50mb'}));
+rugRouter.use(express.urlencoded({limit: '50mb'}));
 
 rugRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })

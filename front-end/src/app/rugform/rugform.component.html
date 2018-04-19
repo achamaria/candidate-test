@@ -1,0 +1,52 @@
+<mat-toolbar mat-dialog-title color="primary">
+  Add a New Rug
+  <span class="flex-spacer"></span>
+</mat-toolbar>
+
+<!--<p>{{ rugForm.value | json }} {{ rugForm.status | json }}</p>-->
+
+<form novalidate [formGroup]="rugForm" (ngSubmit)="onSubmit()">
+
+    <mat-input-container class="full-width"
+                         dividerColor="{{(formErrors.name) ? 'warn' : 'primary'}}">
+      <input matInput formControlName="name" placeholder="Name" type="text" required >
+      <mat-hint>
+                  <span [hidden]="!(formErrors.name)">
+                    {{formErrors.name}}</span>
+      </mat-hint>
+    </mat-input-container>
+
+    <mat-input-container class="full-width"
+                         dividerColor="{{(formErrors.description) ? 'warn' : 'primary'}}">
+      <textarea matInput formControlName="description" placeholder="Rug Description" rows=6 required></textarea>
+      <mat-hint>
+                  <span [hidden]="!(formErrors.description)">
+                    {{formErrors.description}}</span>
+      </mat-hint>
+    </mat-input-container>
+
+
+  <div class="form-group">
+    <label for="image">Image *</label>
+    <input type="file" id="image" (change)="onFileChange($event)" #fileInput required>
+    <mat-hint>
+                  <span [hidden]="!(formErrors.image)">
+                    {{formErrors.image}}</span>
+    </mat-hint>
+  </div>
+
+  <mat-input-container class="full-width"
+                       dividerColor="{{(formErrors.price) ? 'warn' : 'primary'}}">
+    <input matInput formControlName="price" placeholder="Price" type="text" required >
+    <mat-hint>
+                  <span [hidden]="!(formErrors.price)">
+                    {{formErrors.price}}</span>
+    </mat-hint>
+  </mat-input-container>
+
+  <mat-dialog-actions>
+    <span class="flex-spacer"></span>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="rugForm.invalid">Submit</button>
+  </mat-dialog-actions>
+</form>

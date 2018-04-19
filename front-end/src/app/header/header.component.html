@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <span id="mainLogo">Rug CRUD</span>
+  <a mat-button routerLink="/home" routerLinkActive="active"><span class="fa fa-home fa-lg"></span> Home</a>
+  <span class="flex-spacer"></span>
+  <a mat-button (click)="openRugForm()">Add a new Rug</a>
+</mat-toolbar>
+
+<div class="container jumbotron"
+     fxLayout="row"
+     fxLayout.sm="column"
+     fxLayout.xs="column"
+     fxLayoutAlign.xs="start center"
+     fxLayoutAlign.sm="start center"
+     fxLayoutAlign.gt-sm="center center"
+     fxLayoutGap="10px">
+
+  <div fxFlex fxFlex.gt-sm="100%">
+    <h1>Rug CRUD</h1>
+    <p>Create a single page client application in AngularJS to consume the web service above
+      Rug screen
+      List rugs
+      Button to delete a rug
+      New rug form
+      Rug details screen</p>
+  </div>
+  <div fxFlex></div>
+</div>
