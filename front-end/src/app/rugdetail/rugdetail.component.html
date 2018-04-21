@@ -6,12 +6,12 @@
      fxLayoutGap="10px"
      fxLayoutGap.xs="0">
 
-  <div fxFlex="50">
+  <div fxFlex="40">
     <div fxFlex *ngIf="rug" [@visibility]="visibility" [@expand]>
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            <h3>{{rug.name | uppercase}}</h3>
+            <h3>{{rug.name | uppercase}} - ${{rug.price}}</h3>
           </mat-card-title>
         </mat-card-header>
         <img mat-card-image src="data:image/png;base64,{{rug.image}}" alt={{rug.name}}>
@@ -22,22 +22,51 @@
       </mat-card>
     </div>
   </div>
+  <div fxFlex="10"></div>
 
-  <div fxFlex="50">
-    <div fxFlex *ngIf="rug" [@visibility]="visibility" [@expand]>
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>
-            <h3>{{rug.name | uppercase}}</h3>
-          </mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="data:image/png;base64,{{rug.image}}" alt={{rug.name}}>
-        <mat-card-content>
-          <p>{{rug.description}}
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div fxFlex="40" *ngIf="rug" [@visibility]="visibility" [@expand]>
+    <form novalidate [formGroup]="rugForm" (ngSubmit)="onSubmit()" class="full-width">
+<p>
+      <mat-input-container class="full-width" style="width: 95%;"
+                           dividerColor="{{(formErrors.name) ? 'warn' : 'primary'}}">
+        <input matInput formControlName="name" placeholder="Name" type="text" required value="{{rug.name}}">
+        <mat-hint>
+                  <span [hidden]="!(formErrors.name)">
+                    {{formErrors.name}}</span>
+        </mat-hint>
+      </mat-input-container>
+</p>
+      <p>
+      <mat-input-container class="full-width" style="width: 95%;"
+                           dividerColor="{{(formErrors.description) ? 'warn' : 'primary'}}">
+        <textarea matInput formControlName="description" placeholder="Rug Description" rows=6 required  value="{{rug.description}}"></textarea>
+        <mat-hint>
+                  <span [hidden]="!(formErrors.description)">
+                    {{formErrors.description}}</span>
+        </mat-hint>
+      </mat-input-container>
+      </p>
+
+      <div class="form-group">
+        <label for="image">New Image *</label>
+        <input type="file" id="image" (change)="onFileChange($event)" #fileInput required>
+        <mat-hint>
+                  <span [hidden]="!(formErrors.image)">
+                    {{formErrors.image}}</span>
+        </mat-hint>
+      </div>
+<p>
+      <mat-input-container class="full-width" style="width: 95%;"
+                           dividerColor="{{(formErrors.price) ? 'warn' : 'primary'}}">
+        <input matInput formControlName="price" placeholder="Price" type="text" required value="{{rug.price}}" >
+        <mat-hint>
+                  <span [hidden]="!(formErrors.price)">
+                    {{formErrors.price}}</span>
+        </mat-hint>
+      </mat-input-container>
+</p>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="rugForm.invalid">Submit</button>
+    </form>
   </div>
 
 </div>

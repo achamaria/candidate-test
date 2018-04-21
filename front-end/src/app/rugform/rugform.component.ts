@@ -49,7 +49,7 @@ export class RugformComponent implements OnInit {
     },
     'price': {
       'required':      'Price is required.',
-      'positive':      'Price of rug must be greater 0'
+      'pattern':      'Price of rug must be greater 0'
     }
   };
 
@@ -67,7 +67,7 @@ export class RugformComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       description: ['', [Validators.required]],
       image: [null, [Validators.required]],
-      price: ['', [Validators.required, Validators.min(0)]]
+      price: ['', [Validators.required, Validators.pattern('(?:\\d*\\.)?\\d+')]]
     });
     this.rugForm.valueChanges
       .subscribe(data => this.onValueChanged(data));

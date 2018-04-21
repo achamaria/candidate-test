@@ -4,6 +4,7 @@ import { RugService } from '../services/rug.service';
 import {expand, flyInOut, visibility} from '../animations/app.animation';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location} from '@angular/common';
+import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -24,9 +25,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class RugdetailComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef;
   rug: Rug;
-  rugcopy = null;
+  rugcopy: Rug;
   rugId: number;
   rugForm: FormGroup;
+
+  visibility = 'shown';
 
   formErrors = {
     'name': '',
@@ -50,7 +53,7 @@ export class RugdetailComponent implements OnInit {
     },
     'price': {
       'required':      'Price is required.',
-      'positive':      'Price of rug must be greater 0'
+      'pattern':      'Price of rug must be greater 0'
     }
   };
 
@@ -68,8 +71,8 @@ export class RugdetailComponent implements OnInit {
       .subscribe(rug => this.rug = rug);
 
     this.route.params
-      .switchMap((params: Params) => { return this.rugService.getRug(+params['id']); })
-      .subscribe(rug => { this.rug = rug; this.rugcopy = rug;});
+      .switchMap((params: Params) => {this.visibility = 'shown';  return this.rugService.getRug(+params['id']); })
+      .subscribe(rug => { this.rug = rug; this.rugcopy = rug; this.visibility = 'shown'; });
   }
 
   createForm() {
@@ -77,7 +80,7 @@ export class RugdetailComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       description: ['', [Validators.required]],
       image: [null, [Validators.required]],
-      price: ['', [Validators.required, Validators.min(0)]]
+      price: ['', [Validators.required, Validators.pattern('(?:\\d*\\.)?\\d+')]]
     });
     this.rugForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -113,15 +116,15 @@ export class RugdetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.rug = this.rugForm.value;
-    console.log(this.rug);
-    this.rugService.createNewRug(this.rug);
-    this.rugForm.reset({
-      name: '',
-      description: '',
-      image: '',
-      price: ''
-    });
+    this.rugcopy = this.rugForm.value;
+    console.log(this.rugcopy);
+    this.rugService.updateRug(this.rug);
+    // this.rugForm.reset({
+    //   name: '',
+    //   description: '',
+    //   image: '',
+    //   price: ''
+    // });
   }
 
 }

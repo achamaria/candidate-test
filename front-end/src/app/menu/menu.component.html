@@ -4,7 +4,7 @@
 
   <div fxFlex>
     <div>
-      <h3>Menu</h3>
+      <h3>Rugs</h3>
       <hr>
     </div>
   </div>
@@ -14,7 +14,7 @@
       <mat-grid-tile *ngFor="let rug of rugs"  [routerLink]="['/rugdetail', rug._id]" appHighlight>
         <img height="200px" src="data:image/png;base64,{{rug.image}}" alt={{rug.name}}>
         <mat-grid-tile-footer>
-          <h1 mat-line> {{rug.name | uppercase }} </h1>
+          <h1 mat-line> {{rug.name | uppercase }} - ${{rug.price}}</h1>
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>

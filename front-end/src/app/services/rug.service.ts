@@ -22,6 +22,27 @@ export class RugService {
     return  this.restangular.all('rugs').post(newRug);
   }
 
+  updateRug(rug){
+    console.log("in the function");
+    console.log(rug);
+    this.restangular.one('object', rug._id).get().then(function(obj) {
+      obj.something = true;
+      obj.put();
+    });
+    // return this.restangular.all('rugs', rug._id)
+    //   .then(function(editRug){
+    //     var editRug = editRug;
+    //     console.log("dsfads");
+    //     console.log(editRug);
+    //     editRug.name = rug.name;
+    //     editRug.description = rug.description;
+    //     editRug.image = rug.image;
+    //     editRug.price = rug.price;
+    //
+    //     editRug.put();
+    //   });
+  }
+
   getRug(id: number): Observable<Rug> {
     return  this.restangular.one('rugs', id).get();
   }
