@@ -25,6 +25,7 @@
   <div fxFlex="10"></div>
 
   <div fxFlex="40" *ngIf="rug" [@visibility]="visibility" [@expand]>
+    <button mat-button class="mat-background-primary" (click)="deleteRug(rug._id)">Delete this Rug</button>
     <form novalidate [formGroup]="rugForm" (ngSubmit)="onSubmit()" class="full-width">
 <p>
       <mat-input-container class="full-width" style="width: 95%;"

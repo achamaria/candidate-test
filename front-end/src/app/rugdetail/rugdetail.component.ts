@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, ViewChild, ElementRef} from '@angular/core';
 import { Rug } from '../shared/rug';
 import { RugService } from '../services/rug.service';
 import {expand, flyInOut, visibility} from '../animations/app.animation';
-import { Params, ActivatedRoute } from '@angular/router';
+import {Params, ActivatedRoute, Router} from '@angular/router';
 import { Location} from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
@@ -60,7 +60,8 @@ export class RugdetailComponent implements OnInit {
   constructor(private rugService: RugService,
               private route: ActivatedRoute,
               private location: Location, private fb: FormBuilder,
-              @Inject('BaseURL') private BaseURL) {
+              @Inject('BaseURL') private BaseURL,
+              private router: Router) {
     this.route.params.subscribe( params => this.rugId = params.id );
     this.createForm();
   }
@@ -118,13 +119,12 @@ export class RugdetailComponent implements OnInit {
   onSubmit() {
     this.rugcopy = this.rugForm.value;
     console.log(this.rugcopy);
-    this.rugService.updateRug(this.rug);
-    // this.rugForm.reset({
-    //   name: '',
-    //   description: '',
-    //   image: '',
-    //   price: ''
-    // });
+    this.rugService.updateRug(this.rug, this.rugcopy);
+  }
+
+  deleteRug(id){
+    this.rugService.deleteRug(id);
+    this.router.navigate(['/home']);
   }
 
 }

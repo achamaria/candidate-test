@@ -29,7 +29,6 @@ import { FooterComponent } from './footer/footer.component';
 
 import { RugdetailComponent } from './rugdetail/rugdetail.component';
 import { RugformComponent } from './rugform/rugform.component';
-
 @NgModule({
   declarations: [
     AppComponent,

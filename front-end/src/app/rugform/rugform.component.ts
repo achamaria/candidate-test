@@ -2,7 +2,7 @@ import {Component, OnInit, Inject, ViewChild, ElementRef} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Rug } from "../shared/rug";
 import {RugService} from "../services/rug.service";
-import { Params, ActivatedRoute } from '@angular/router';
+import {Params, ActivatedRoute, Router} from '@angular/router';
 import { Location} from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {expand, flyInOut, visibility} from '../animations/app.animation';
@@ -55,7 +55,7 @@ export class RugformComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<RugformComponent>, private rugService: RugService,
               private route: ActivatedRoute,private location: Location,
-              private fb: FormBuilder, @Inject('BaseURL') private BaseURL) {
+              private fb: FormBuilder, @Inject('BaseURL') private BaseURL, private router: Router) {
     this.createForm();
   }
 
@@ -112,6 +112,8 @@ export class RugformComponent implements OnInit {
       image: '',
       price: ''
     });
+    this.router.navigate(['/home']);
+
     this.dialogRef.close();
   }
 

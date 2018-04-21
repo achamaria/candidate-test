@@ -22,9 +22,18 @@ export class MenuComponent implements OnInit {
   errMess: string;
 
   constructor(private rugService: RugService,
-              @Inject('BaseURL') private BaseURL) { }
+              @Inject('BaseURL') private BaseURL) {
+
+    this.rugService.getRugs()
+      .subscribe(rugs => this.rugs = rugs, errmess => this.errMess = <any>errmess);
+  }
 
   ngOnInit() {
+    this.rugService.getRugs()
+      .subscribe(rugs => this.rugs = rugs, errmess => this.errMess = <any>errmess);
+  }
+
+  ngOnChanges() {
     this.rugService.getRugs()
       .subscribe(rugs => this.rugs = rugs, errmess => this.errMess = <any>errmess);
   }
